@@ -89,5 +89,50 @@
         <tbody>
         </tbody>
     </table>
+    <script>
+        class Data {
+            constructor(value) {
+                this.value = value;
+            }
+        }
+
+        const dataList = [];
+
+        const form = document.getElementById('form');
+        const inputData = document.getElementById('inputData');
+        const table = document.getElementById('table').getElementsByTagName('tbody')[0];
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            
+            const newValue = inputData.value;
+            const newData = new Data(newValue);
+            dataList.push(newData);
+            renderTable();
+            inputData.value = '';
+        });
+
+        function renderTable() {
+            table.innerHTML = '';
+
+            dataList.forEach((data, index) => {
+                const row = table.insertRow();
+
+                const cell1 = row.insertCell(0);
+                cell1.textContent = data.value;
+
+                const cell2 = row.insertCell(1);
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Deletar';
+                deleteButton.addEventListener('click', () => deleteData(index));
+                cell2.appendChild(deleteButton);
+            });
+        }
+
+        function deleteData(index) {
+            dataList.splice(index, 1);
+            renderTable();
+        }
+</script>
 </body>
 </html>    
